@@ -501,18 +501,24 @@ if st.session_state.get("iniciado"):
         else:
             usuario["adaptabilidad"] += 15
 
-        # =====================================================
-# NORMALIZAR VALORES A 0-100
-# =====================================================
 
-       for variable in usuario: usuario[variable] = max(0,min(100, usuario[variable]))
+
+        # =====================================================
+        # NORMALIZAR VALORES A 0-100
+        # =====================================================
+
+        for variable in usuario:
+
+            usuario[variable] = max(
+                0,
+                min(100, usuario[variable])
+            )
 
         usuario_df = pd.DataFrame([usuario])
 
         usuario_scaled = scaler.transform(
             usuario_df[variables]
         )
-
         usuario_pca = pca.transform(usuario_scaled)
 
         cluster = int(
