@@ -815,29 +815,17 @@ else:
     En escenarios universitarios este patrón puede favorecer capacidad de reacción rápida y respuesta eficiente ante presión temporal. En la vida cotidiana puede relacionarse con iniciativa y acción inmediata frente a problemas. Sin embargo, cuando las decisiones requieren análisis profundo, podría existir tendencia a actuar antes de evaluar completamente las consecuencias.
     """
 
-st.markdown(f"""
-<div class="card">
+st.subheader("¿Qué significa tu perfil?")
 
-<h3>¿Qué significa tu perfil?</h3>
+st.write(significado)
 
-<p>
-{significado}
-</p>
+st.subheader("Patrones de decisión observados")
 
-<h3>Patrones de decisión observados</h3>
+st.write(patrones)
 
-<p>
-{patrones}
-</p>
+st.subheader("¿Qué implicaciones puede tener esto?")
 
-<h3>¿Qué implicaciones puede tener esto?</h3>
-
-<p>
-{implicaciones}
-</p>
-
-</div>
-""", unsafe_allow_html=True)
+st.write(implicaciones)
 
 st.info("""
 Este reporte NO representa un diagnóstico psicológico ni clínico.
