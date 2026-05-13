@@ -577,29 +577,29 @@ if "perfil" in st.session_state:
 
     st.header("2. Índices conductuales integrados")
 
-    indice_exploracion = round(
-        (
-            usuario["riesgo"] * 0.35 +
-            usuario["exploracion"] * 0.40 +
-            usuario["adaptabilidad"] * 0.25
-        ),1
-    )
+indice_exploracion = min(100, round(
+    (
+        usuario["riesgo"] * 0.35 +
+        usuario["exploracion"] * 0.40 +
+        usuario["adaptabilidad"] * 0.25
+    ),1
+))
 
-    indice_estabilidad = round(
-        (
-            usuario["planeacion"] * 0.40 +
-            usuario["precision"] * 0.35 +
-            usuario["cooperacion"] * 0.25
-        ),1
-    )
+indice_estabilidad = min(100, round(
+    (
+        usuario["planeacion"] * 0.40 +
+        usuario["precision"] * 0.35 +
+        usuario["cooperacion"] * 0.25
+    ),1
+))
 
-    indice_presion = round(
-        (
-            usuario["impulsividad"] * 0.45 +
-            usuario["riesgo"] * 0.30 +
-            usuario["adaptabilidad"] * 0.25
-        ),1
-    )
+indice_presion = min(100, round(
+    (
+        usuario["impulsividad"] * 0.45 +
+        usuario["riesgo"] * 0.30 +
+        usuario["adaptabilidad"] * 0.25
+    ),1
+))
 
     col1, col2, col3 = st.columns(3)
 
