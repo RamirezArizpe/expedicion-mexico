@@ -576,30 +576,64 @@ if "perfil" in st.session_state:
     # =====================================================
 
     st.header("2. Índices conductuales integrados")
+# =====================================================
+# ÍNDICES
+# =====================================================
 
-indice_exploracion = min(100, round(
-    (
-        usuario["riesgo"] * 0.35 +
-        usuario["exploracion"] * 0.40 +
-        usuario["adaptabilidad"] * 0.25
-    ),1
-))
+    st.header("2. Índices conductuales integrados")
 
-indice_estabilidad = min(100, round(
-    (
-        usuario["planeacion"] * 0.40 +
-        usuario["precision"] * 0.35 +
-        usuario["cooperacion"] * 0.25
-    ),1
-))
+    indice_exploracion = min(100, round(
+        (
+            usuario["riesgo"] * 0.35 +
+            usuario["exploracion"] * 0.40 +
+            usuario["adaptabilidad"] * 0.25
+        ),1
+    ))
 
-indice_presion = min(100, round(
-    (
-        usuario["impulsividad"] * 0.45 +
-        usuario["riesgo"] * 0.30 +
-        usuario["adaptabilidad"] * 0.25
-    ),1
-))
+    indice_estabilidad = min(100, round(
+        (
+            usuario["planeacion"] * 0.40 +
+            usuario["precision"] * 0.35 +
+            usuario["cooperacion"] * 0.25
+        ),1
+    ))
+
+    indice_presion = min(100, round(
+        (
+            usuario["impulsividad"] * 0.45 +
+            usuario["riesgo"] * 0.30 +
+            usuario["adaptabilidad"] * 0.25
+        ),1
+    ))
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+
+        st.metric(
+            "Exploración Estratégica",
+            f"{indice_exploracion}/100"
+        )
+
+        st.progress(indice_exploracion / 100)
+
+    with col2:
+
+        st.metric(
+            "Estabilidad Operativa",
+            f"{indice_estabilidad}/100"
+        )
+
+        st.progress(indice_estabilidad / 100)
+
+    with col3:
+
+        st.metric(
+            "Respuesta Bajo Presión",
+            f"{indice_presion}/100"
+        )
+
+        st.progress(indice_presion / 100)
 
     col1, col2, col3 = st.columns(3)
 
