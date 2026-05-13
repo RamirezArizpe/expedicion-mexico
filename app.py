@@ -753,50 +753,94 @@ if "perfil" in st.session_state:
 
     st.pyplot(fig)
 
-    # =====================================================
-    # LECTURA APLICADA
-    # =====================================================
+   # =====================================================
+# LECTURA APLICADA
+# =====================================================
 
-    st.header("4. Lectura aplicada de tu expedición")
+st.header("4. Lectura aplicada de tu expedición")
 
-    st.markdown(f"""
-    <div class="card">
+if st.session_state["perfil"] == "Cauteloso Analítico":
 
-    <h3>Interpretación general</h3>
+    significado = """
+    Durante la expedición mostraste un patrón de decisión orientado hacia la estabilidad, el análisis y la reducción de incertidumbre. Tus respuestas sugieren preferencia por escenarios estructurados, previsibles y con mayor control sobre las consecuencias. Este perfil suele evaluar cuidadosamente los riesgos antes de actuar y prioriza la seguridad operativa sobre la improvisación.
+    """
 
-    <p>
-    Tus decisiones mostraron semejanza con el perfil:
-    <strong>{st.session_state["perfil"]}</strong>.
-    </p>
+    patrones = """
+    A lo largo del recorrido aparecieron conductas asociadas con planeación, precisión y control de recursos. Tus decisiones mostraron tendencia a evitar pérdidas innecesarias, buscar información antes de actuar y mantener estabilidad aun bajo presión temporal. También se observó menor impulsividad frente a escenarios inciertos.
+    """
 
-    <p>
-    La combinación de:
-    </p>
+    implicaciones = """
+    En contextos universitarios, este patrón puede favorecer organización académica, cumplimiento de objetivos y manejo estructurado de responsabilidades. En la vida cotidiana, suele relacionarse con personas que buscan estabilidad y control antes de tomar decisiones importantes. Sin embargo, en ciertos contextos podría existir dificultad para actuar rápidamente ante escenarios altamente cambiantes o ambiguos.
+    """
 
-    <ul>
-    <li>riesgo {nivel(usuario["riesgo"])},</li>
-    <li>exploración {nivel(usuario["exploracion"])},</li>
-    <li>planeación {nivel(usuario["planeacion"])},</li>
-    <li>adaptabilidad {nivel(usuario["adaptabilidad"])},</li>
-    <li>y cooperación {nivel(usuario["cooperacion"])}.</li>
-    </ul>
+elif st.session_state["perfil"] == "Explorador Estratégico":
 
-    <p>
-    sugiere patrones de decisión observables en escenarios con:
-    </p>
+    significado = """
+    Tu expedición mostró un perfil orientado hacia exploración, apertura y búsqueda de oportunidades. Tus decisiones reflejaron comodidad frente a incertidumbre moderada y disposición a asumir riesgos cuando existe posibilidad de recompensa o descubrimiento. Este perfil combina curiosidad con capacidad de adaptación.
+    """
 
-    <ul>
-    <li>presión temporal,</li>
-    <li>recursos limitados,</li>
-    <li>información incompleta,</li>
-    <li>y necesidad de coordinación grupal.</li>
-    </ul>
+    patrones = """
+    Durante el recorrido aparecieron patrones asociados con exploración conductual, flexibilidad y tolerancia al riesgo. Mostraste tendencia a avanzar aun con información incompleta y a priorizar experiencias nuevas sobre estabilidad absoluta. También se observó rapidez para ajustarte a cambios de contexto.
+    """
 
-    </div>
-    """, unsafe_allow_html=True)
+    implicaciones = """
+    En la vida universitaria este patrón puede favorecer creatividad, aprendizaje autónomo y facilidad para adaptarse a entornos dinámicos. En escenarios personales y profesionales suele relacionarse con iniciativa, innovación y apertura a nuevas experiencias. No obstante, una exploración excesiva podría llevar ocasionalmente a asumir riesgos sin suficiente planeación.
+    """
 
-    st.info("""
-    Este reporte NO representa un diagnóstico psicológico ni clínico.
+elif st.session_state["perfil"] == "Adaptativo Resiliente":
 
-    La experiencia toma inspiración metodológica de análisis previos realizados en Python sobre presión, estrés y patrones conductuales, transformándolos en una simulación narrativa educativa.
-    """)
+    significado = """
+    Tus decisiones sugirieron un perfil equilibrado entre análisis, adaptación y flexibilidad. A lo largo de la expedición mostraste capacidad para ajustarte a situaciones cambiantes sin perder completamente estabilidad o estructura. Este perfil suele responder funcionalmente frente a escenarios ambiguos o inciertos.
+    """
+
+    patrones = """
+    Se observaron conductas relacionadas con adaptación progresiva, negociación y ajuste contextual. Tus decisiones no se mantuvieron rígidas frente a los cambios, pero tampoco mostraron impulsividad extrema. El patrón general indica capacidad para reorganizar estrategias conforme aparecen nuevos elementos dentro del entorno.
+    """
+
+    implicaciones = """
+    En contextos universitarios este perfil puede favorecer trabajo colaborativo, resolución de problemas y adaptación a carga académica variable. En la vida cotidiana suele asociarse con personas capaces de enfrentar cambios sin perder funcionalidad general. También puede facilitar manejo emocional más flexible frente a presión o incertidumbre.
+    """
+
+else:
+
+    significado = """
+    Durante la expedición apareció un patrón de decisión más reactivo e inmediato frente a presión o incertidumbre. Tus respuestas mostraron tendencia a actuar rápidamente cuando el entorno exige resolver situaciones en poco tiempo. Este perfil suele priorizar acción inmediata sobre análisis prolongado.
+    """
+
+    patrones = """
+    A lo largo del recorrido se observaron decisiones asociadas con impulsividad, rapidez de respuesta y tolerancia alta a escenarios inciertos. En distintos momentos se priorizó avanzar rápidamente o resolver situaciones de forma inmediata aun con información incompleta.
+    """
+
+    implicaciones = """
+    En escenarios universitarios este patrón puede favorecer capacidad de reacción rápida y respuesta eficiente ante presión temporal. En la vida cotidiana puede relacionarse con iniciativa y acción inmediata frente a problemas. Sin embargo, cuando las decisiones requieren análisis profundo, podría existir tendencia a actuar antes de evaluar completamente las consecuencias.
+    """
+
+st.markdown(f"""
+<div class="card">
+
+<h3>¿Qué significa tu perfil?</h3>
+
+<p>
+{significado}
+</p>
+
+<h3>Patrones de decisión observados</h3>
+
+<p>
+{patrones}
+</p>
+
+<h3>¿Qué implicaciones puede tener esto?</h3>
+
+<p>
+{implicaciones}
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
+st.info("""
+Este reporte NO representa un diagnóstico psicológico ni clínico.
+
+La experiencia transforma patrones estadísticos observados en simulaciones narrativas de toma de decisiones bajo incertidumbre. Su propósito es educativo y exploratorio dentro de un contexto de ciencia de datos aplicada al comportamiento humano.
+""")
