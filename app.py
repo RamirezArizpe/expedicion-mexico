@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 # CONFIGURACIÓN GENERAL
 # =====================================================
 st.set_page_config(
-    page_title="Expedición México · Simulación Conductual",
+    page_title="Expedición México · Simulación de Decisiones",
     page_icon="🧭",
     layout="wide"
 )
@@ -20,32 +20,30 @@ st.set_page_config(
 # =====================================================
 st.markdown("""
 <style>
-/* App background y tipografía */
 .stApp {
     background: #F7F8FA;
     color: #1E293B;
 }
 
 .block-container {
-    max-width: 1080px;
+    max-width: 1040px;
     padding-top: 2rem;
     padding-bottom: 4rem;
 }
 
-/* Encabezados institucionales */
 h1 {
     color: #7A003C !important;
-    font-size: 3rem !important;
+    font-size: 2.8rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 0.4rem !important;
 }
 
 h2 {
     color: #7A003C !important;
     font-weight: 700 !important;
     margin-top: 1.8rem !important;
-    font-size: 1.5rem !important;
+    font-size: 1.45rem !important;
 }
 
 h3 {
@@ -53,33 +51,31 @@ h3 {
     font-weight: 700 !important;
 }
 
-/* Tarjetas y Contenedores */
 .card {
     background: #FFFFFF;
     padding: 1.8rem 2rem;
-    border-radius: 20px;
+    border-radius: 18px;
     border: 1px solid #E5E7EB;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
     margin-bottom: 1.5rem;
 }
 
 .interpretacion {
     background: #FFFFFF;
-    border-radius: 16px;
-    padding: 1.2rem 1.5rem;
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
     border: 1px solid #E5E7EB;
     margin-bottom: 0.8rem;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
 }
 
-/* Botones institucionales */
 .stButton button {
     background: #7A003C !important;
     color: white !important;
     border: none !important;
     border-radius: 12px !important;
-    padding: 0.85rem 1.5rem !important;
-    font-size: 1.05rem !important;
+    padding: 0.85rem 1.6rem !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
     box-shadow: 0 8px 20px rgba(122,0,60,0.18);
     transition: all 0.2s ease;
@@ -90,7 +86,6 @@ h3 {
     transform: translateY(-1px);
 }
 
-/* Opciones de Radio */
 .stRadio > div {
     background: #FFFFFF;
     padding: 1rem 1.2rem;
@@ -99,19 +94,18 @@ h3 {
     margin-bottom: 0.8rem;
 }
 
-/* Métricas */
 [data-testid="stMetric"] {
     background: #FFFFFF;
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 1rem 1.2rem;
     border: 1px solid #E5E7EB;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
 }
 </style>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# DATA SCIENCE & CACHING (Optimizador de rendimiento)
+# DATA SCIENCE & CACHING
 # =====================================================
 VARIABLES = [
     "riesgo", "exploracion", "precision", 
@@ -123,12 +117,11 @@ def inicializar_modelos():
     np.random.seed(42)
     perfiles = []
     
-    # 4 Configuraciones base para la simulación
     configuraciones = [
         [25, 40, 88, 55, 25, 88, 65],  # Cauteloso
         [75, 88, 68, 82, 55, 70, 72],  # Explorador
         [55, 65, 78, 88, 42, 75, 82],  # Adaptativo
-        [85, 58, 52, 48, 88, 42, 50]   # Reactivo/Impulsivo
+        [85, 58, 52, 48, 88, 42, 50]   # Reactivo / Impulsivo
     ]
     
     for perfil in configuraciones:
@@ -163,7 +156,7 @@ def inicializar_modelos():
 base, scaler, pca, kmeans = inicializar_modelos()
 
 # =====================================================
-# REGLAS E INTERPRETACIONES CONDUCTUALES
+# INTERPRETACIONES Y REGLAS
 # =====================================================
 def nivel(valor):
     if valor >= 75:
@@ -175,39 +168,39 @@ def nivel(valor):
 def interpretar_variable(nombre, valor):
     interpretaciones = {
         "riesgo": {
-            "alto": "Tiendes a aceptar incertidumbre y asumir escenarios con mayor exposición a pérdida o recompensa.",
-            "moderado": "Evalúas escenarios antes de actuar y equilibras riesgo con estabilidad.",
-            "bajo": "Prefieres minimizar incertidumbre y mantener control sobre posibles pérdidas."
+            "alto": "Aceptas la incertidumbre con soltura y te atraen los escenarios con margen amplio de ganancia o pérdida.",
+            "moderado": "Mides el terreno antes de dar el paso; buscas un balance sano entre audacia y estabilidad.",
+            "bajo": "Prefieres el terreno firme, cuidando siempre tener el control de los posibles costos."
         },
         "exploracion": {
-            "alto": "Mostraste apertura a descubrir nuevas rutas y explorar escenarios poco estructurados.",
-            "moderado": "Tu exploración se mantuvo equilibrada entre seguridad y descubrimiento.",
-            "bajo": "Preferiste caminos conocidos y contextos más estables."
+            "alto": "Muestras curiosidad constante por abrir brecha y probar caminos poco transitados.",
+            "moderado": "Equilibras bien la curiosidad por lo nuevo con paradas seguras y conocidas.",
+            "bajo": "Te apoyas en rutas probadas, optimizando sobre lo seguro antes de improvisar."
         },
         "precision": {
-            "alto": "Tus decisiones mostraron atención al detalle y análisis cuidadoso.",
-            "moderado": "Equilibraste rapidez con precisión al tomar decisiones.",
-            "bajo": "Tus decisiones priorizaron velocidad o exploración más que exactitud."
+            "alto": "Prestas atención minuciosa al detalle y buscas claridad antes de comprometer una decisión.",
+            "moderado": "Cuidas los detalles esenciales sin dejar que el análisis frene el avance del grupo.",
+            "bajo": "Priorizas el ritmo y la agilidad de movimiento por encima de la exactitud milimétrica."
         },
         "adaptabilidad": {
-            "alto": "Mostraste facilidad para ajustarte a contextos cambiantes.",
-            "moderado": "Tu adaptación fue funcional en escenarios moderadamente inciertos.",
-            "bajo": "Mostraste preferencia por estabilidad y estructuras claras."
+            "alto": "Te acomodas con rapidez a los giros inesperados y resuelves con lo que haya a la mano.",
+            "moderado": "Respondes de forma práctica frente a imprevistos cotidianos sin perder el temple.",
+            "bajo": "Trabajas mucho mejor cuando las reglas, los tiempos y las condiciones son claras desde el inicio."
         },
         "impulsividad": {
-            "alto": "Tendiste a actuar rápidamente bajo presión o incertidumbre.",
-            "moderado": "Combinaste rapidez con momentos de reflexión.",
-            "bajo": "Preferiste analizar antes de actuar."
+            "alto": "Tiendes a responder de golpe cuando arrecia la presión del tiempo o el entorno.",
+            "moderado": "Sabes alternar entre reacciones inmediatas y pausas breves de valoración.",
+            "bajo": "Prefieres procesar la situación con calma antes de mover una sola pieza."
         },
         "planeacion": {
-            "alto": "Tus decisiones mostraron orientación fuerte hacia organización y previsión.",
-            "moderado": "Tu planeación fue funcional sin perder flexibilidad.",
-            "bajo": "Tus decisiones priorizaron acción inmediata sobre planificación extensa."
+            "alto": "Tu brújula está en la anticipación, el orden y tener previstos los pasos siguientes.",
+            "moderado": "Trazas un plan base claro, pero mantienes margen de maniobra sobre la marcha.",
+            "bajo": "Te orientas a la acción sobre el terreno; prefieres resolver conforme surgen las cosas."
         },
         "cooperacion": {
-            "alto": "Mostraste disposición alta para integrar perspectivas grupales.",
-            "moderado": "Tu cooperación fue equilibrada con autonomía.",
-            "bajo": "Tendiste a priorizar decisiones individuales."
+            "alto": "Buscas sumar puntos de vista y construir acuerdos donde todo el equipo se sienta parte.",
+            "moderado": "Sabes conciliar con el grupo sin descuidar tu propio criterio y autonomía.",
+            "bajo": "Confías primordialmente en tu criterio individual para no entorpecer el avance."
         }
     }
     return interpretaciones[nombre][nivel(valor)]
@@ -222,120 +215,120 @@ def perfil_cluster(c):
     return perfiles[c]
 
 # =====================================================
-# LANDING Y BIENVENIDA
+# LANDING
 # =====================================================
 st.title("🧭 Expedición México")
-st.markdown("##### Descubre cómo tomas decisiones bajo incertidumbre mientras recorres distintos escenarios de México.")
+st.markdown("##### Una travesía interactiva para conocer tu estilo al resolver dilemas en ruta.")
 
-with st.expander("ℹ️ ¿Qué es esta experiencia y cuál es su sustento?", expanded=False):
+with st.expander("ℹ️ Acerca de esta simulación", expanded=False):
     st.markdown("""
-    **Expedición México** es una simulación interactiva construida a partir de modelos de ciencia de datos y análisis conductual:
-    * **Clustering Conductual:** Agrupamiento no supervisado mediante *K-Means* ($k=4$).
-    * **Reducción Dimensional:** Proyección en espacio vectorial bidimensional vía *PCA*.
-    * **Análisis Multivariado:** Normalización z-score sobre 7 dimensiones de toma de decisión.
+    **Expedición México** pone a prueba tu criterio frente a imprevistos en ruta a través de modelos de ciencia de datos:
+    * **Clustering Conductual:** Agrupamiento de patrones de decisión con *K-Means* ($k=4$).
+    * **Reducción Dimensional:** Visualización espacial de tus elecciones mediante *PCA*.
+    * **Variables analizadas:** Riesgo, exploración, precisión, adaptabilidad, impulsividad, planeación y cooperación.
     
-    *Nota metodológica: La experiencia NO representa una evaluación clínica ni diagnóstica. Es un simulador educativo de toma de decisiones.*
+    *Nota: Este ejercicio es una simulación formativa de toma de decisiones; no constituye una valoración clínica ni psicológica.*
     """)
 
 st.divider()
 
 # =====================================================
-# CONTROL DE ESTADO DE SESIÓN
+# CONTROL DE SESIÓN
 # =====================================================
 if "iniciado" not in st.session_state:
     st.session_state["iniciado"] = False
 
 if not st.session_state["iniciado"]:
-    st.header("Inicio de la expedición")
-    nombre_input = st.text_input("Nombre o alias del participante", placeholder="Ej. Alex R.")
+    st.header("Punto de reunión")
+    nombre_input = st.text_input("¿Cómo te gustaría registrarte en la bitácora?", placeholder="Nombre o alias")
     
-    if st.button("Comenzar expedición"):
-        st.session_state["nombre"] = nombre_input.strip() if nombre_input.strip() else "Participante"
+    if st.button("Subir a la expedición"):
+        st.session_state["nombre"] = nombre_input.strip() if nombre_input.strip() else "Viajero"
         st.session_state["iniciado"] = True
         st.rerun()
 
 # =====================================================
-# FORMULARIO DE ESCENARIOS (NARRATIVA INMERSIVA)
+# DILEMAS EN RUTA (NARRATIVA EN ESPAÑOL DE MÉXICO)
 # =====================================================
 if st.session_state["iniciado"]:
-    st.success(f"Bienvenido/a a la expedición, **{st.session_state.get('nombre', 'Participante')}**.")
+    st.success(f"Todo listo en la bitácora. Buen viaje, **{st.session_state.get('nombre', 'Viajero')}**.")
 
     with st.form("formulario_expedicion"):
         
-        # Parada 1
-        st.header("1. El Punto de Partida — Altiplano Central")
+        # Parada 1: Altiplano Central
+        st.header("1. La salida — Altiplano Central")
         r1 = st.radio(
-            "La expedición parte al amanecer. Tienes en tus manos una carta de ruta validada y el rumor de un sendero poco transitado con vestigios arqueológicos intactos. ¿Cuál es tu primera decisión?",
+            "La camioneta sale al amanecer. Tienen la ruta marcada por autopista de cuota, pero un contacto local les avisa de una desviación por carretera libre donde hay una zona arqueológica poco conocida y sin filtros de acceso. ¿Qué decides?",
             [
-                "Avanzar estrictamente por la carretera federal planificada; la prioridad es cumplir el itinerario sin contratiempos.",
-                "Tomar la ruta escénica secundaria: permite explorar el paisaje sin alejarse demasiado del camino principal.",
-                "Internarse de inmediato por la brecha comunitaria; los mayores descubrimientos están fuera del mapa oficial."
+                "Seguir por la autopista directa; la prioridad es llegar a tiempo y sin sorpresas mecánicas o de tráfico.",
+                "Tomar la carretera libre un tramo: permite conocer el paisaje sin desviarse demasiado del tiempo estimado.",
+                "Irse directo por la brecha comunitaria; las mejores historias del viaje no están sobre el asfalto principal."
             ],
             index=0
         )
 
-        # Parada 2
-        st.header("2. Gestión en la Sierra — Valles Centrales de Oaxaca")
+        # Parada 2: Valles de Oaxaca
+        st.header("2. El dilema del presupuesto — Sierra de Oaxaca")
         r2 = st.radio(
-            "En la sierra oaxaqueña surge la opción de alquilar transporte de montaña y guías locales para llegar a una reserva remota antes de que llueva. El costo es alto frente a tus fondos. ¿Cómo administras tus recursos?",
+            "En la sierra les ofrecen contratar camionetas 4x4 y guías de la comunidad para subir a un mirador en la niebla antes de que caiga el aguacero de la tarde. La vuelta consume una parte importante de la lana del viaje. ¿Cómo lo manejas?",
             [
-                "Conservar el fondo intacto y explorar únicamente las rutas a pie cubiertas por el presupuesto asignado.",
-                "Invertir parcialmente en una visita corta para mantener un fondo de reserva ante cualquier eventualidad.",
-                "Desembolsar lo necesario sin titubear; la oportunidad de cruzar la sierra antes de la tormenta justifica el gasto."
+                "Cuidar la reserva y hacer el recorrido a pie por los senderos autorizados que no generan costo extra.",
+                "Pagar solo una parte del recorrido para conocer el primer paraje y guardar un colchón para imprevistos.",
+                "Pagar completo el recorrido de una vez; una vista así difícilmente se repite y el dinero se repone después."
             ],
             index=0
         )
 
-        # Parada 3
-        st.header("3. Ambigüedad en la Selva — Península de Yucatán")
+        # Parada 3: Selva de Yucatán
+        st.header("3. Sin señal — Península de Yucatán")
         r3 = st.radio(
-            "En la selva yucateca, el GPS pierde enlace satelital justo ante una bifurcación no documentada. Quedan 90 minutos de luz natural para ubicar el campamento. ¿Cómo respondes ante la falta de datos?",
+            "Buscando el acceso a un cenote en la selva baja, los celulares se quedan sin señal y el mapa descargado no coincide con una bifurcación recién abierta. Queda apenas hora y media de luz. ¿Qué instrucción das?",
             [
-                "Esperar en el lugar, montar campamento base de resguardo y buscar señal con calma a primera hora del día.",
-                "Avanzar con brújula manual y marcas de terreno, ajustando el rumbo paso a paso sobre la marcha.",
-                "Actuar rápidamente y seguir el cauce del arroyo más cercano para avanzar antes del anochecer."
+                "Hacer alto total, no arriesgar la camioneta y esperar al día siguiente con luz clara para pedir informes en el pueblo.",
+                "Bajar a revisar huellas de llantas y referencias del camino para avanzar despacio, metro a metro.",
+                "Agarrar el camino más ancho a buen paso para ganar terreno antes de que se oculte el sol por completo."
             ],
             index=0
         )
 
-        # Parada 4
-        st.header("4. Conflicto en el Campamento — Noche de Tormenta")
+        # Parada 4: Desacuerdo en el equipo
+        st.header("4. La sobremesa tensa — El campamento")
         r4 = st.radio(
-            "El clima empeora y el equipo se divide: una mitad exige refugiarse de inmediato y la otra insiste en mantener el ascenso hacia el observatorio. Debes destrabar la discusión. ¿Qué postura adoptas?",
+            "El pronóstico anuncia frente frío y la camioneta viene algo justa de frenos. En la cena se desata la discusión: la mitad quiere regresar a descansar a una cabaña segura y la otra insiste en subir al cerro cueste lo que cueste. ¿Cómo intervienes?",
             [
-                "Mantener el plan original aprobado al inicio y pedir a toda la tripulación apegarse a la disciplina.",
-                "Negociar una solución intermedia: una pausa técnica breve para dialogar y fijar un punto medio de resguardo.",
-                "Cambiar completamente la estrategia y ordenar una retirada táctica hacia una ruta alterna no explorada."
+                "Recordar el plan original de la salida y pedirle a todos que nos apeguemos a lo acordado desde el principio.",
+                "Poner una pausa de cinco minutos para escuchar ambas posturas y buscar una opción intermedia que calme los ánimos.",
+                "Cortar la discusión de tajo y proponer cambiar el rumbo completo hacia un destino distinto que nadie traía en mente."
             ],
             index=0
         )
 
-        # Parada 5
-        st.header("5. Carrera Contra el Tiempo — Retorno a la Terminal CDMX")
+        # Parada 5: El regreso
+        st.header("5. El cierre de la jornada — Terminal Pantitlán, CDMX")
         r5 = st.radio(
-            "De regreso en la capital, llegas a la estación con las muestras y el equipo justo cuando anuncian el silbatazo del último convoy del metro. Hay aglomeración en los torniquetes. ¿Qué haces?",
+            "De regreso en la ciudad, llegan a la estación de transbordo cargando mochilas y equipo justo cuando suena el timbre de cierre del último tren de la noche. La entrada está llena de gente. ¿Cómo reaccionas?",
             [
-                "Corres a máxima velocidad para superar el tumulto y alcanzar a subirte antes del cierre de puertas.",
-                "Buscas rutas alternas en el mapa metropolitano para combinar trolebús o metrobús de forma más ordenada.",
-                "Pides transporte privado por aplicación móvil aunque no estuviera planeado, garantizando resguardar el material."
+                "Apretar el paso esquivando a la gente para alcanzar a entrar al vagón antes de que cierren las puertas.",
+                "Hacer una pausa en el andén exterior, abrir la aplicación de movilidad y ver qué opciones de trolebús o metrobús siguen activas.",
+                "Pedir un taxi de aplicación entre todos aunque cueste más; lo importante es llegar a casa seguros y con el equipo completo."
             ],
             index=0
         )
 
-        enviar = st.form_submit_button("Generar reporte conductual")
+        enviar = st.form_submit_button("Consultar mi bitácora final")
 
     # =====================================================
-    # MOTOR CONDUCTUAL (Mapeo de Variables)
+    # MOTOR CONDUCTUAL
     # =====================================================
     if enviar:
         usuario = {var: 50.0 for var in VARIABLES}
 
-        # R1: Altiplano Central
-        if "carretera federal" in r1:
+        # R1: Altiplano
+        if "autopista" in r1:
             usuario["riesgo"] -= 20
             usuario["precision"] += 20
             usuario["planeacion"] += 20
-        elif "escénica secundaria" in r1:
+        elif "carretera libre" in r1:
             usuario["adaptabilidad"] += 15
             usuario["exploracion"] += 10
         else:
@@ -344,45 +337,44 @@ if st.session_state["iniciado"]:
             usuario["impulsividad"] += 10
 
         # R2: Oaxaca
-        if "Conservar el fondo" in r2:
+        if "Cuidar la reserva" in r2:
             usuario["planeacion"] += 20
             usuario["precision"] += 15
-        elif "Invertir parcialmente" in r2:
+        elif "Pagar solo una parte" in r2:
             usuario["adaptabilidad"] += 15
         else:
             usuario["riesgo"] += 15
             usuario["impulsividad"] += 20
 
         # R3: Yucatán
-        if "Esperar en el lugar" in r3:
+        if "Hacer alto total" in r3:
             usuario["precision"] += 15
             usuario["impulsividad"] -= 10
-        elif "Avanzar con brújula" in r3:
+        elif "Bajar a revisar huellas" in r3:
             usuario["adaptabilidad"] += 20
         else:
             usuario["riesgo"] += 20
             usuario["impulsividad"] += 25
 
-        # R4: Tormenta
-        if "Mantener el plan" in r4:
+        # R4: Campamento
+        if "Recordar el plan" in r4:
             usuario["cooperacion"] -= 15
-        elif "Negociar una solución" in r4:
+        elif "Poner una pausa" in r4:
             usuario["cooperacion"] += 25
             usuario["adaptabilidad"] += 10
         else:
             usuario["riesgo"] += 10
 
-        # R5: Terminal CDMX
-        if "Corres a máxima" in r5:
+        # R5: Regreso
+        if "Apretar el paso" in r5:
             usuario["impulsividad"] += 15
             usuario["riesgo"] += 10
-        elif "Buscas rutas" in r5:
+        elif "Hacer una pausa en el andén" in r5:
             usuario["planeacion"] += 15
             usuario["precision"] += 15
         else:
             usuario["adaptabilidad"] += 15
 
-        # Normalización de rango [0, 100]
         for var in usuario:
             usuario[var] = float(max(0, min(100, usuario[var])))
 
@@ -398,14 +390,14 @@ if st.session_state["iniciado"]:
         st.session_state["procesado"] = True
 
 # =====================================================
-# DASHBOARD DE RESULTADOS
+# REPORTE DE RESULTADOS
 # =====================================================
 if st.session_state.get("procesado"):
     usuario = st.session_state["usuario"]
     cluster_idx = st.session_state["cluster"]
     
     st.divider()
-    st.header("📊 Reporte conductual de tu expedición")
+    st.header("📊 Lectura de tu recorrido")
 
     cluster_nombres = {
         0: "Cluster Analítico",
@@ -415,23 +407,23 @@ if st.session_state.get("procesado"):
     }
 
     c_col1, c_col2 = st.columns(2)
-    c_col1.metric("Perfil detectado", st.session_state["perfil"])
-    c_col2.metric("Grupo conductual (Clustering)", cluster_nombres[cluster_idx])
+    c_col1.metric("Estilo de toma de decisiones", st.session_state["perfil"])
+    c_col2.metric("Grupo en el modelo (K-Means)", cluster_nombres[cluster_idx])
 
-    # 1. Métricas Individuales
-    st.subheader("1. Interpretación de tus métricas conductuales")
+    # 1. Variables
+    st.subheader("1. Balance por dimensión en la expedición")
     
     for var in VARIABLES:
         st.markdown(f"""
         <div class="interpretacion">
-            <h4 style="color: #7A003C; margin-bottom: 4px;">{var.capitalize()} — Nivel {nivel(usuario[var])}</h4>
+            <h4 style="color: #7A003C; margin-bottom: 4px;">{var.capitalize()} — Rango {nivel(usuario[var])}</h4>
             <p style="margin-bottom: 4px;"><strong>Puntaje:</strong> {round(usuario[var], 1)} / 100</p>
             <p style="color: #475569; margin: 0;">{interpretar_variable(var, usuario[var])}</p>
         </div>
         """, unsafe_allow_html=True)
 
-    # 2. Índices Sintéticos Integrados
-    st.subheader("2. Índices conductuales integrados")
+    # 2. Índices integrados
+    st.subheader("2. Indicadores de dinámica en ruta")
 
     indice_exploracion = min(100.0, round(
         usuario["riesgo"] * 0.35 + usuario["exploracion"] * 0.40 + usuario["adaptabilidad"] * 0.25, 1
@@ -445,17 +437,17 @@ if st.session_state.get("procesado"):
 
     idx_c1, idx_c2, idx_c3 = st.columns(3)
     with idx_c1:
-        st.metric("Exploración Estratégica", f"{indice_exploracion} / 100")
+        st.metric("Iniciativa y Exploración", f"{indice_exploracion} / 100")
         st.progress(indice_exploracion / 100.0)
     with idx_c2:
-        st.metric("Estabilidad Operativa", f"{indice_estabilidad} / 100")
+        st.metric("Cuidado y Estabilidad", f"{indice_estabilidad} / 100")
         st.progress(indice_estabilidad / 100.0)
     with idx_c3:
         st.metric("Respuesta Bajo Presión", f"{indice_presion} / 100")
         st.progress(indice_presion / 100.0)
 
-    # 3. Mapa Dimensional PCA
-    st.subheader("3. Tu posición en el mapa conductual (PCA 2D)")
+    # 3. Mapa PCA
+    st.subheader("3. Tu posición en el mapa de perfiles (PCA)")
 
     colores = {0: "#7A003C", 1: "#2563EB", 2: "#16A34A", 3: "#EA580C"}
     nombres_clusters = {
@@ -463,11 +455,10 @@ if st.session_state.get("procesado"):
         2: "Adaptativo Resiliente", 3: "Impulsivo Bajo Presión"
     }
 
-    fig, ax = plt.subplots(figsize=(10, 5.5))
+    fig, ax = plt.subplots(figsize=(10, 5.2))
     fig.patch.set_facecolor("#F7F8FA")
     ax.set_facecolor("#FFFFFF")
 
-    # Scatter de la base sintética
     for c in sorted(base["Cluster"].unique()):
         c_data = base[base["Cluster"] == c]
         ax.scatter(
@@ -476,19 +467,17 @@ if st.session_state.get("procesado"):
             label=nombres_clusters[c]
         )
 
-    # Centroides de cluster
     for c in sorted(base["Cluster"].unique()):
         cx = base[base["Cluster"] == c]["PCA1"].mean()
         cy = base[base["Cluster"] == c]["PCA2"].mean()
-        ax.scatter(cx, cy, color=colores[c], s=260, edgecolor="#1E293B", linewidth=1.8, zorder=4)
+        ax.scatter(cx, cy, color=colores[c], s=240, edgecolor="#1E293B", linewidth=1.8, zorder=4)
         ax.text(cx, cy + 0.3, nombres_clusters[c], fontsize=8.5, ha="center", weight="bold", color="#1E293B")
 
-    # Coordenada del participante
     u_pca = st.session_state["usuario_pca"][0]
-    ax.scatter(u_pca[0], u_pca[1], color="#DC2626", s=380, marker="X", edgecolor="#000000", linewidth=2, label="Tu perfil", zorder=5)
+    ax.scatter(u_pca[0], u_pca[1], color="#DC2626", s=380, marker="X", edgecolor="#000000", linewidth=2, label="Tu posición", zorder=5)
 
-    ax.set_title("Mapa de Similitud Conductual (Espacio Reducido PCA)", fontsize=13, fontweight="bold", pad=12, color="#1E293B")
-    ax.grid(alpha=0.2, linestyle="--")
+    ax.set_title("Distribución en el plano de componentes principales", fontsize=12, fontweight="bold", pad=12, color="#1E293B")
+    ax.grid(alpha=0.18, linestyle="--")
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_color("#CBD5E1")
@@ -497,40 +486,40 @@ if st.session_state.get("procesado"):
 
     st.pyplot(fig)
 
-    # 4. Lectura Aplicada
-    st.subheader("4. Lectura aplicada de tu expedición")
+    # 4. Narrativa de cierre
+    st.subheader("4. Síntesis de tu perfil")
 
     narrativas = {
         "Cauteloso Analítico": {
-            "significado": "Durante la expedición mostraste un patrón de decisión orientado hacia la estabilidad, el análisis y la reducción de incertidumbre. Tus respuestas sugieren preferencia por escenarios estructurados, previsibles y con mayor control sobre las consecuencias. Este perfil suele evaluar cuidadosamente los riesgos antes de actuar y prioriza la seguridad operativa sobre la improvisación.",
-            "patrones": "A lo largo del recorrido aparecieron conductas asociadas con planeación, precisión y control de recursos. Tus decisiones mostraron tendencia a evitar pérdidas innecesarias, buscar información antes de actuar y mantener estabilidad aun bajo presión temporal. También se observó menor impulsividad frente a escenarios inciertos.",
-            "implicaciones": "En contextos universitarios, este patrón puede favorecer organización académica, cumplimiento de objetivos y manejo estructurado de responsabilidades. En la vida cotidiana, suele relacionarse con personas que buscan estabilidad y control antes de tomar decisiones importantes. Sin embargo, en ciertos contextos podría existir dificultad para actuar rápidamente ante escenarios altamente cambiantes o ambiguos."
+            "significado": "En la ruta mostraste preferencia por la estabilidad y por tener claras las variables antes de comprometer recursos. Prefieres cuidar los márgenes de seguridad, no arriesgar la camioneta de más y asegurar que el equipo cumpla con el plan trazado.",
+            "patrones": "Tus decisiones reflejan planeación, sobriedad en el gasto y prudencia ante imprevistos. Te tomas un momento para revisar opciones antes de actuar y mantienes la cabeza fría frente a la presión del reloj.",
+            "implicaciones": "En proyectos de equipo y vida universitaria, este estilo es el ancla que evita desviaciones costosas y descuidos. Sin embargo, en escenarios donde todo cambia de un minuto a otro, conviene soltar un poco el libreto para no perder oportunidades por exceso de precaución."
         },
         "Explorador Estratégico": {
-            "significado": "Tu expedición mostró un perfil orientado hacia exploración, apertura y búsqueda de oportunidades. Tus decisiones reflejaron comodidad frente a incertidumbre moderada y disposición a asumir riesgos cuando existe posibilidad de recompensa o descubrimiento. Este perfil combina curiosidad con capacidad de adaptación.",
-            "patrones": "Durante el recorrido aparecieron patrones asociados con exploración conductual, flexibilidad y tolerancia al riesgo. Mostraste tendencia a avanzar aun con información incompleta y a priorizar experiencias nuevas sobre estabilidad absoluta. También se observó rapidez para ajustarte a cambios de contexto.",
-            "implicaciones": "En la vida universitaria este patrón puede favorecer creatividad, aprendizaje autónomo y facilidad para adaptarse a entornos dinámicos. En escenarios personales y profesionales suele relacionarse con iniciativa, innovación y apertura a nuevas experiencias. No obstante, una exploración excesiva podría llevar ocasionalmente a asumir riesgos sin suficiente planeación."
+            "significado": "Tu estilo se orienta a descubrir y aprovechar oportunidades en el camino. Asumes la incertidumbre como parte natural del viaje y estás dispuesto a pagar el costo de explorar si la experiencia o el aprendizaje lo ameritan.",
+            "patrones": "Aparece una marcada disposición a tomar rutas alternas, avanzar aun cuando la información esté incompleta y buscar novedades sin descuidar del todo la viabilidad del trayecto.",
+            "implicaciones": "Este perfil aporta empuje, curiosidad e innovación en cualquier grupo de trabajo. El punto de atención radica en no sobreestimar las reservas de tiempo o presupuesto para no comprometer el regreso a casa."
         },
         "Adaptativo Resiliente": {
-            "significado": "Tus decisiones sugirieron un perfil equilibrado entre análisis, adaptación y flexibilidad. A lo largo de la expedición mostraste capacidad para ajustarte a situaciones cambiantes sin perder completamente estabilidad o estructura. Este perfil suele responder funcionalmente frente a escenarios ambiguos o inciertos.",
-            "patrones": "Se observaron conductas relacionadas con adaptación progresiva, negociación y ajuste contextual. Tus decisiones no se mantuvieron rígidas frente a los cambios, pero tampoco mostraron impulsividad extrema. El patrón general indica capacidad para reorganizar estrategias conforme aparecen nuevos elementos dentro del entorno.",
-            "implicaciones": "En contextos universitarios este perfil puede favorecer trabajo colaborativo, resolución de problemas y adaptación a carga académica variable. En la vida cotidiana suele asociarse con personas capaces de enfrentar cambios sin perder funcionalidad general. También puede facilitar manejo emocional más flexible frente a presión o incertidumbre."
+            "significado": "Mostraste un balance equilibrado entre sensatez, flexibilidad y escucha activa. No te aferras a planes rígidos si las circunstancias sobre el terreno cambian, pero tampoco tomas decisiones a tontas y a locas.",
+            "patrones": "Destaca tu habilidad para destrabar desacuerdos, ajustar el itinerario con los recursos disponibles y encontrar salidas prácticas que mantengan al grupo unido y en marcha.",
+            "implicaciones": "En contextos colaborativos y de alta demanda, eres quien mantiene la armonía operativa y saca los proyectos adelante frente a los tropiezos cotidianos."
         },
         "Impulsivo Bajo Presión": {
-            "significado": "Durante la expedición apareció un patrón de decisión más reactivo e inmediato frente a presión o incertidumbre. Tus respuestas mostraron tendencia a actuar rápidamente cuando el entorno exige resolver situaciones en poco tiempo. Este perfil suele priorizar acción inmediata sobre análisis prolongado.",
-            "patrones": "A lo largo del recorrido se observaron decisiones asociadas con impulsividad, rapidez de respuesta y tolerancia alta a escenarios inciertos. En distintos momentos se priorizó avanzar rápidamente o resolver situaciones de forma inmediata aun con información incompleta.",
-            "implicaciones": "En escenarios universitarios este patrón puede favorecer capacidad de reacción rápida y respuesta eficiente ante presión temporal. En la vida cotidiana puede relacionarse con iniciativa y acción inmediata frente a problemas. Sin embargo, cuando las decisiones requieren análisis profundo, podría existir tendencia a actuar antes de evaluar completamente las consecuencias."
+            "significado": "Frente a la urgencia y los imprevistos, tu reacción inmediata es resolver sobre la marcha y con determinación. Prefieres equivocarte intentando avanzar antes que quedarte varado analizando la situación.",
+            "patrones": "Tus respuestas priorizan velocidad, resolución en caliente y una tolerancia alta a la falta de certezas cuando el tiempo apremia.",
+            "implicaciones": "Es una cualidad muy valiosa en momentos de emergencia donde titubear cuesta caro. En decisiones complejas o de mediano plazo, una pausa breve para consultar con el equipo te ahorrará vueltas innecesarias."
         }
     }
 
     perfil_actual = st.session_state["perfil"]
-    st.markdown(f"**¿Qué significa tu perfil?**\n\n{narrativas[perfil_actual]['significado']}")
-    st.markdown(f"**Patrones de decisión observados:**\n\n{narrativas[perfil_actual]['patrones']}")
-    st.markdown(f"**¿Qué implicaciones puede tener esto?**\n\n{narrativas[perfil_actual]['implicaciones']}")
+    st.markdown(f"**¿Cómo se traduce en el terreno?**\n\n{narrativas[perfil_actual]['significado']}")
+    st.markdown(f"**Tendencias de decisión observadas:**\n\n{narrativas[perfil_actual]['patrones']}")
+    st.markdown(f"**Recomendaciones para el trabajo colaborativo:**\n\n{narrativas[perfil_actual]['implicaciones']}")
 
-    st.info("Este reporte transforma patrones estadísticos observados en simulaciones narrativas de toma de decisiones bajo incertidumbre. Su propósito es formativo y exploratorio dentro de un contexto de ciencia de datos aplicada.")
+    st.caption("Simulación desarrollada con fines formativos y de divulgación en ciencia de datos aplicada a la conducta.")
 
-    if st.button("Reiniciar expedición"):
+    if st.button("Iniciar un nuevo recorrido"):
         for key in ["iniciado", "usuario", "cluster", "perfil", "usuario_pca", "procesado"]:
             if key in st.session_state:
                 del st.session_state[key]
