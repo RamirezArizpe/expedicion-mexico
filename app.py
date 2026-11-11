@@ -329,7 +329,7 @@ if st.session_state["etapa"] == "intro":
             A lo largo de cinco paradas clave en la geografía mexicana, enfrentarás dilemas típicos de ruta donde los recursos, el tiempo o el clima te orillarán a tomar decisiones.
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
-            Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a cientos de perfiles simulados.
+            Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a perfiles simulados.
         </p>
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
