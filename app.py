@@ -363,7 +363,7 @@ if st.session_state["etapa"] == "intro":
             A través de cinco situaciones en distintas regiones del país, esta experiencia analiza cómo resuelves dilemas cuando los recursos son limitados, los tiempos apremian o la información es incompleta.
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 1rem;">
-            Tus respuestas alimentan un modelo de <strong>agrupamiento no supervisado (K-Means)</strong> y una <strong>reducción dimensional (PCA)</strong> sobre siete variables conductuales. Al finalizar, la app desplegará la posición exacta de tus decisiones frente a la población analizada.
+            Tus respuestas son comparadas con un modelo de <strong>agrupamiento no supervisado (K-Means)</strong> y una <strong>reducción dimensional (PCA)</strong> sobre siete variables conductuales. Al finalizar, la app desplegará la posición que ocupa tu perfil de respuestas frente a la población analizada.
         </p>
         <p style="color: #64748B; font-size: 0.84rem; line-height: 1.5; margin-bottom: 0; border-top: 1px solid #E2E8F0; padding-top: 10px;">
             Este ejercicio corresponde a una simulación de ciencia de datos aplicada a la conducta con fines educativos y formativos. Los resultados no constituyen una evaluación psicológica ni un diagnóstico clínico.
