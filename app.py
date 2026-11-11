@@ -30,7 +30,7 @@ st.markdown("""
 }
 
 .block-container {
-    max-width: 820px;
+    max-width: 840px;
     padding-top: 2rem;
     padding-bottom: 3.5rem;
 }
@@ -122,6 +122,34 @@ button[kind="primary"]:hover {
     transform: translateY(-1px);
 }
 
+/* Tarjetas de recomendaciones por escenario */
+.scenario-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-left: 4px solid #7A003C;
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+}
+
+.scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: #7A003C;
+    margin-bottom: 0.4rem;
+}
+
+.scenario-body {
+    font-size: 0.94rem;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+}
+
 /* Métricas del Dashboard */
 [data-testid="stMetric"] {
     background: #FFFFFF;
@@ -129,14 +157,6 @@ button[kind="primary"]:hover {
     padding: 1.1rem 1.3rem;
     border: 1px solid #E2E8F0;
     box-shadow: 0 4px 14px rgba(0,0,0,0.02);
-}
-
-.metric-card-custom {
-    background: #FFFFFF;
-    border-radius: 14px;
-    padding: 1rem 1.2rem;
-    border: 1px solid #E2E8F0;
-    margin-bottom: 0.65rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -192,7 +212,7 @@ def inicializar_modelos():
 base, scaler, pca, kmeans = inicializar_modelos()
 
 # =====================================================
-# DICCIONARIOS DE INTERPRETACIÓN
+# DICCIONARIOS DE INTERPRETACIÓN ACCESIBLE
 # =====================================================
 def nivel(valor):
     if valor >= 75: return "alto"
@@ -202,39 +222,39 @@ def nivel(valor):
 def interpretar_variable(nombre, valor):
     interpretaciones = {
         "riesgo": {
-            "alto": "Aceptas la incertidumbre con soltura y te atraen los escenarios con margen amplio de ganancia o pérdida.",
-            "moderado": "Mides el terreno antes de dar el paso; buscas un balance sano entre audacia y estabilidad.",
-            "bajo": "Prefieres el terreno firme, cuidando siempre tener el control de los posibles costos."
+            "alto": "Te sientes a gusto con la incertidumbre. Te atraen las apuestas audaces donde hay mucho por ganar, asumiendo el costo si las cosas no salen a la primera.",
+            "moderado": "No le huyes a los retos, pero cuidas no aventarte a ciegas; buscas un balance práctico entre audacia y seguridad.",
+            "bajo": "Prefieres pisar sobre seguro y tener el control de los imprevistos antes de comprometer tiempo o recursos."
         },
         "exploracion": {
-            "alto": "Muestras curiosidad constante por abrir brecha y probar caminos poco transitados.",
-            "moderado": "Equilibras bien la curiosidad por lo nuevo con paradas seguras y conocidas.",
-            "bajo": "Te apoyas en rutas probadas, optimizando sobre lo seguro antes de improvisar."
+            "alto": "Tienes curiosidad constante por abrir brecha, probar caminos nuevos y salir de la zona conocida.",
+            "moderado": "Disfrutas conocer cosas nuevas, pero te apoyas en paradas seguras para no perder el rumbo.",
+            "bajo": "Prefieres dominar y perfeccionar las rutas que ya conoces antes de ponerte a experimentar."
         },
         "precision": {
-            "alto": "Prestas atención minuciosa al detalle y buscas claridad antes de comprometer una decisión.",
-            "moderado": "Cuidas los detalles esenciales sin dejar que el análisis frene el avance del grupo.",
-            "bajo": "Priorizas el ritmo y la agilidad de movimiento por encima de la exactitud milimétrica."
+            "alto": "Te fijas mucho en los detalles. No te gusta tomar decisiones a la ligera sin revisar bien la información previa.",
+            "moderado": "Cuidas los detalles importantes sin dejar que el exceso de análisis frene el ritmo de avance.",
+            "bajo": "Priorizas actuar rápido y resolver sobre la marcha antes que detenerte en minucias."
         },
         "adaptabilidad": {
-            "alto": "Te acomodas con rapidez a los giros inesperados y resuelves con lo que haya a la mano.",
-            "moderado": "Respondes de forma práctica frente a imprevistos cotidianos sin perder el temple.",
-            "bajo": "Trabajas mucho mejor cuando las reglas, los tiempos y las condiciones son claras desde el inicio."
+            "alto": "Tienes cintura para sortear imprevistos: si el plan inicial se cae, resuelves con lo que haya a la mano sin perder el temple.",
+            "moderado": "Te ajustas de forma práctica a los cambios habituales sin que te descoloquen.",
+            "bajo": "Rindes mucho mejor cuando las reglas, los tiempos y el camino están claramente marcados desde el inicio."
         },
         "impulsividad": {
-            "alto": "Tiendes a responder de golpe cuando arrecia la presión del tiempo o el entorno.",
-            "moderado": "Sabes alternar entre reacciones inmediatas y pausas breves de valoración.",
-            "bajo": "Prefieres procesar la situación con calma antes de mover una sola pieza."
+            "alto": "Reaccionas de inmediato ante la presión o el apuro; prefieres moverte ya antes de quedarte pensando.",
+            "moderado": "Sabes cuándo responder rápido y cuándo hacer una pausa corta para valorar la situación.",
+            "bajo": "Procesas las opciones con calma; prefieres no apresurarte aunque el entorno tenga prisa."
         },
         "planeacion": {
-            "alto": "Tu brújula está en la anticipación, el orden y tener previstos los pasos siguientes.",
-            "moderado": "Trazas un plan base claro, pero mantienes margen de maniobra sobre la marcha.",
-            "bajo": "Te orientas a la acción sobre el terreno; prefieres resolver conforme surgen las cosas."
+            "alto": "Tu mayor fortaleza es anticipar: te gusta tener un mapa claro, itinerario previsto y recursos ordenados.",
+            "moderado": "Trazas un plan base sólido, pero dejas suficiente margen para maniobrar según se presenten las cosas.",
+            "bajo": "Eres de acción directa; te resulta más cómodo resolver frente al problema que pasar horas proyectando."
         },
         "cooperacion": {
-            "alto": "Buscas sumar puntos de vista y construir acuerdos donde todo el equipo se sienta parte.",
-            "moderado": "Sabes conciliar con el grupo sin descuidar tu propio criterio y autonomía.",
-            "bajo": "Confías primordialmente en tu criterio individual para no entorpecer el avance."
+            "alto": "Buscas sumar voluntades, conciliar puntos de vista y asegurar que todos en el grupo se sientan tomados en cuenta.",
+            "moderado": "Sabes colaborar en equipo sin perder tu propia voz ni tu autonomía de decisión.",
+            "bajo": "Confías primordialmente en tu propio criterio para avanzar con agilidad y evitar discusiones interminables."
         }
     }
     return interpretaciones[nombre][nivel(valor)]
@@ -307,7 +327,7 @@ ESCENARIOS = [
 # INICIALIZACIÓN DE ESTADOS
 # =====================================================
 if "etapa" not in st.session_state:
-    st.session_state["etapa"] = "intro" # intro -> wizard -> resultados
+    st.session_state["etapa"] = "intro"
 if "paso_actual" not in st.session_state:
     st.session_state["paso_actual"] = 0
 if "respuestas" not in st.session_state:
@@ -320,25 +340,20 @@ if "nombre" not in st.session_state:
 # =====================================================
 if st.session_state["etapa"] == "intro":
     st.title("🧭 Expedición México")
-    st.markdown("##### Una experiencia de toma de decisiones bajo incertidumbre.")
+    st.markdown("##### Una experiencia interactiva de toma de decisiones bajo incertidumbre.")
     
     st.markdown("""
     <div class="station-card">
         <h3 style="margin-top:0;">Bienvenido a la expedición</h3>
         <p style="color: #475569; line-height: 1.6;">
-            A lo largo de cinco paradas clave en la geografía mexicana, enfrentarás dilemas típicos de ruta donde los recursos, el tiempo o el clima te orillarán a tomar decisiones.
+            A lo largo de cinco paradas clave en la geografía mexicana, enfrentarás dilemas típicos de ruta donde los recursos, el tiempo o el clima te obligarán a tomar decisiones con información incompleta.
         </p>
-        <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
-            Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a perfiles simulados.
+        <p style="color: #475569; line-height: 1.6;">
+            Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a cientos de perfiles simulados.
         </p>
+        <p style="color: #64748B; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0; border-top: 1px dashed #E2E8F0; padding-top: 12px;">
+            ⚠️ <em>Nota importante: Este prototipo es una simulación formativa de ciencia de datos aplicada a la conducta. Los resultados no constituyen una evaluación diagnóstica, clínica ni psicológica. Tu participación es totalmente libre y voluntaria.</em>
         </p>
-        <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
-            <strong>Está accediendo a un prototipo de evaluación, los resultados no representan un diagnóstico psicológico y/o clínico, forman parte de una simulación educativa.</strong>
-        </p>
-        </p>
-        <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
-            <strong>Su participación y permanencia es totalmente voluntaria.</strong>
-        </p
     </div>
     """, unsafe_allow_html=True)
 
@@ -358,7 +373,6 @@ elif st.session_state["etapa"] == "wizard":
     total = len(ESCENARIOS)
     datos_escenario = ESCENARIOS[idx]
 
-    # Barra de progreso superior
     progreso = (idx + 1) / total
     st.progress(progreso)
     st.caption(f"Hito {idx + 1} de {total} · {datos_escenario['estacion']}")
@@ -371,7 +385,6 @@ elif st.session_state["etapa"] == "wizard":
     </div>
     """, unsafe_allow_html=True)
 
-    # Radio button estilizado
     opcion_guardada = st.session_state["respuestas"].get(idx, datos_escenario["opciones"][0])
     seleccion = st.radio(
         "Selecciona tu curso de acción:",
@@ -381,7 +394,6 @@ elif st.session_state["etapa"] == "wizard":
         label_visibility="collapsed"
     )
 
-    # Navegación entre pasos
     col_nav1, col_nav2 = st.columns([1, 1])
 
     with col_nav1:
@@ -401,7 +413,6 @@ elif st.session_state["etapa"] == "wizard":
             if st.button("Finalizar travesía ✨", type="primary", use_container_width=True):
                 st.session_state["respuestas"][idx] = seleccion
                 
-                # Microanimación de cálculo
                 with st.spinner("Procesando telemetría y proyectando en el plano PCA..."):
                     time.sleep(0.7)
                 
@@ -409,10 +420,9 @@ elif st.session_state["etapa"] == "wizard":
                 st.rerun()
 
 # =====================================================
-# VISTA 3: DASHBOARD INTERACTIVO DE RESULTADOS
+# VISTA 3: DASHBOARD INTERACTIVO Y NARRATIVA EXPANDIDA
 # =====================================================
 elif st.session_state["etapa"] == "resultados":
-    # 1. Mapeo de puntajes
     usuario = {var: 50.0 for var in VARIABLES}
     r = st.session_state["respuestas"]
 
@@ -459,14 +469,12 @@ elif st.session_state["etapa"] == "resultados":
     for var in usuario:
         usuario[var] = float(max(0, min(100, usuario[var])))
 
-    # Transformación matemática
     usuario_df = pd.DataFrame([usuario])
     usuario_scaled = scaler.transform(usuario_df[VARIABLES])
     usuario_pca = pca.transform(usuario_scaled)[0]
     cluster_id = int(kmeans.predict([usuario_pca])[0])
     perfil_nombre = perfil_cluster(cluster_id)
 
-    # Encabezado de Resultados
     st.title("📊 Bitácora de Llegada")
     st.markdown(f"Expedicionario: **{st.session_state['nombre']}**")
 
@@ -474,14 +482,113 @@ elif st.session_state["etapa"] == "resultados":
     col_hero1.metric("Estilo de toma de decisiones", perfil_nombre)
     col_hero2.metric("Cluster de afinidad", f"Grupo #{cluster_id + 1}")
 
-    # Tabs de visualización para no amontonar
-    tab_mapa, tab_radar, tab_detalle = st.tabs([
+    tab_detalle, tab_mapa, tab_radar = st.tabs([
+        "📖 Diagnóstico y Escenarios de Vida", 
         "📍 Posición en el Mapa (PCA)", 
-        "🕸️ Huella de Competencias", 
-        "📝 Diagnóstico e Índices"
+        "🕸️ Huella de Competencias"
     ])
 
-    # TAB 1: PLOTLY INTERACTIVO (PCA)
+    # TAB 1: DIAGNÓSTICO PROFUNDO Y ESCENARIOS COTIDIANOS
+    with tab_detalle:
+        # Índices sintéticos
+        idx_exp = min(100.0, round(usuario["riesgo"]*0.35 + usuario["exploracion"]*0.40 + usuario["adaptabilidad"]*0.25, 1))
+        idx_est = min(100.0, round(usuario["planeacion"]*0.40 + usuario["precision"]*0.35 + usuario["cooperacion"]*0.25, 1))
+        idx_pre = min(100.0, round(usuario["impulsividad"]*0.45 + usuario["riesgo"]*0.30 + usuario["adaptabilidad"]*0.25, 1))
+
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Iniciativa y Exploración", f"{idx_exp} / 100")
+        c2.metric("Cuidado y Estabilidad", f"{idx_est} / 100")
+        c3.metric("Respuesta Bajo Presión", f"{idx_pre} / 100")
+
+        st.divider()
+
+        # DICCIONARIO DE INTERPRETACIONES EXTENDIDAS
+        NARRATIVAS_EXPANDIDAS = {
+            "Cauteloso Analítico": {
+                "que_significa": """
+                Durante la ruta mostraste un estilo guiado por la prudencia, el cálculo cuidadoso y la aversión a pérdidas innecesarias. 
+                No te dejas deslumbrar con facilidad por promesas arriesgadas si comprometen la seguridad del grupo o el presupuesto. 
+                Eres la persona que revisa la presión de las llantas, guarda el comprobante y se asegura de que haya suficiente combustible antes de entrar a la sierra.
+                """,
+                "superpoder": "Generas orden, estabilidad y certidumbre en momentos donde otros se precipitan o actúan por pura ocurrencia.",
+                "punto_ciego": "A veces el exceso de precaución o la búsqueda de certeza absoluta puede hacerte dudar de más y perder oportunidades valiosas que exigen subirse al tren de inmediato.",
+                "estudiantil": "En entregas de proyectos, tesis o semanas de exámenes eres impecable organizando calendarios, fuentes bibliográficas y rúbricas. Tu reto: no quedarte estancado corrigiendo detalles menores cuando el trabajo ya cumple con creces el objetivo.",
+                "laboral": "Excelente en gestión de riesgos, auditoría, finanzas, control de calidad y planeación de operaciones. Los equipos aprecian tu rigor técnico. Tu recomendación: practica presentar propuestas en etapas tempranas sin esperar a que estén al 100% blindadas.",
+                "cotidiana": "En salidas con amigos o compras personales cuidas la cartera y prefieres itinerarios probados que eviten malos ratos. Intenta de vez en cuando aceptar planes espontáneos sin tener que planear cada minuto del fin de semana."
+            },
+            "Explorador Estratégico": {
+                "que_significa": """
+                Tu estilo se alimenta del descubrimiento, la curiosidad activa y la búsqueda de nuevos horizontes. 
+                Entiendes que viajar implica asumir cierto margen de incertidumbre y que los mejores aprendizajes casi siempre están fuera del asfalto principal. 
+                Sabes sopesar cuándo vale la pena asumir un costo extra o tomar una brecha si la recompensa cultural o personal lo amerita.
+                """,
+                "superpoder": "Inyectas visión, empuje y entusiasmo para romper la monotonía y encontrar soluciones fuera de la caja.",
+                "punto_ciego": "Puedes llegar a sobreestimar tus fuerzas o los recursos disponibles, comprometiendo los tiempos de entrega por querer abarcar más terreno del que da el día.",
+                "estudiantil": "Brillas en materias de innovación, investigación de campo, talleres creativos y debates. Tu reto: la constancia en tareas rutinarias o metodologías rígidas donde no hay espacio para improvisar.",
+                "laboral": "Ideal para desarrollo de nuevos proyectos, áreas comerciales, innovación abierta y liderazgo de producto. Tu recomendación: haz equipo con perfiles organizados que te ayuden a documentar y aterrizar tus ideas en cronogramas firmes.",
+                "cotidiana": "Eres quien propone el restaurante nuevo, la ruta alterna o el viaje a un rincón del país que nadie conocía. Recuerda verificar detalles básicos (horarios, efectivo necesario) para no convertir la aventura en un dolor de cabeza para quienes te acompañan."
+            },
+            "Adaptativo Resiliente": {
+                "que_significa": """
+                Mostraste un balance admirable entre sensatez, flexibilidad y escucha activa. 
+                Tu gran virtud es que no te quiebras cuando el plan inicial se descarrila: aceptas la realidad tal como viene, respiras hondo y buscas la salida más inteligente con los recursos que tienes a la mano. 
+                Además, sabes mediar cuando los ánimos se calientan en el equipo.
+                """,
+                "superpoder": "Capacidad camaleónica para mantener la calma, destrabar desacuerdos y sacar adelante la misión sin generar fricciones innecesarias.",
+                "punto_ciego": "Por intentar conciliar con todos y no generar conflicto, puedes postergar tus propias prioridades o ceder terreno frente a posturas más dominantes.",
+                "estudiantil": "Eres el compañero ideal en trabajos en equipo: ayudas a repartir cargas de manera justa y resuelves cuando alguien no entrega a tiempo. Tu reto: aprender a poner límites claros y no asumir trabajo ajeno solo para evitar tensiones.",
+                "laboral": "Altamente cotizado en gestión de personas, coordinación interdepartamental, consultoría y resolución de crisis operativas. Tu recomendación: expresa con firmeza tu propia postura antes de pasar a la fase de mediación.",
+                "cotidiana": "Fluyes con naturalidad en cualquier reunión o viaje familiar; sabes disfrutar tanto una comida sencilla en carretera como una cena planeada. Cuida que tu flexibilidad no te lleve a postergar tus propias decisiones personales."
+            },
+            "Impulsivo Bajo Presión": {
+                "que_significa": """
+                Frente a la urgencia, el reloj en contra y los contratiempos, tu chip interior se enciende en modo acción inmediata. 
+                No toleras quedarte de brazos cruzados debatiendo teorías mientras el problema empeora frente a tus ojos. 
+                Prefieres dar un paso al frente, correr el riesgo de equivocarte y corregir sobre la marcha antes que congelarte por el miedo al fallo.
+                """,
+                "superpoder": "Valentía operativa y velocidad de respuesta fulminante en situaciones críticas donde titubear cuesta caro.",
+                "punto_ciego": "Actuar en caliente con información incompleta puede orillarte a saltarte pasos indispensables o gastar energía resolviendo consecuencias que se habrían evitado con 5 minutos de reflexión previa.",
+                "estudiantil": "Rindes bajo adrenalina pura; eres capaz de sacar entregas complejas en una sola noche y reaccionar con agilidad en exámenes orales. Tu reto: no dejar todo para el último momento para evitar el desgaste físico y mental innecesario.",
+                "laboral": "Excelente en áreas de respuesta a emergencias, ventas de alta velocidad, logística de última milla o ambientes de alta presión. Tu recomendación: cuenta hasta diez y consulta con al menos una persona reflexiva antes de tomar decisiones que comprometan presupuestos importantes.",
+                "cotidiana": "Eres el primero en brincar cuando se poncha una llanta o hay que destrabar un trámite urgente. Cuida que esa misma intensidad no se traduzca en contestaciones tajantes con familiares o amigos cuando las cosas no van al ritmo que tú quisieras."
+            }
+        }
+
+        info_perfil = NARRATIVAS_EXPANDIDAS[perfil_nombre]
+
+        st.markdown(f"### 🧭 Tu estilo al descubierto: {perfil_nombre}")
+        st.write(info_perfil["que_significa"])
+
+        col_sp1, col_sp2 = st.columns(2)
+        with col_sp1:
+            st.success(f"**🌟 Tu superpoder:**\n\n{info_perfil['superpoder']}")
+        with col_sp2:
+            st.warning(f"**⚡ Tu punto de atención:**\n\n{info_perfil['punto_ciego']}")
+
+        st.markdown("### 🎯 Recomendaciones prácticas por escenario")
+        
+        st.markdown(f"""
+        <div class="scenario-box">
+            <div class="scenario-header">🎓 En la vida estudiantil y académica</div>
+            <p class="scenario-body">{info_perfil['estudiantil']}</p>
+        </div>
+        <div class="scenario-box">
+            <div class="scenario-header">💼 En la vida profesional y el trabajo</div>
+            <p class="scenario-body">{info_perfil['laboral']}</p>
+        </div>
+        <div class="scenario-box">
+            <div class="scenario-header">☕ En la vida cotidiana y con amigos</div>
+            <p class="scenario-body">{info_perfil['cotidiana']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.expander("🔍 ¿Cómo entender tus 7 puntuaciones individuales?"):
+            for var in VARIABLES:
+                puntaje = usuario[var]
+                st.markdown(f"**{var.capitalize()}** — `{round(puntaje, 1)} pts` ({nivel(puntaje).upper()})")
+                st.caption(interpretar_variable(var, puntaje))
+
+    # TAB 2: PLOTLY INTERACTIVO (PCA)
     with tab_mapa:
         st.markdown("##### Tu coordenada frente a la población simulada (N=180)")
         colores_clusters = {0: "#7A003C", 1: "#2563EB", 2: "#16A34A", 3: "#EA580C"}
@@ -489,7 +596,6 @@ elif st.session_state["etapa"] == "resultados":
 
         fig_pca = go.Figure()
 
-        # Scatter de la población
         for c in sorted(base["Cluster"].unique()):
             sub = base[base["Cluster"] == c]
             fig_pca.add_trace(go.Scatter(
@@ -500,7 +606,6 @@ elif st.session_state["etapa"] == "resultados":
                 hoverinfo="name"
             ))
 
-        # Centroides
         for c in sorted(base["Cluster"].unique()):
             cx = base[base["Cluster"] == c]["PCA1"].mean()
             cy = base[base["Cluster"] == c]["PCA2"].mean()
@@ -514,7 +619,6 @@ elif st.session_state["etapa"] == "resultados":
                 showlegend=False
             ))
 
-        # Posición del Usuario
         fig_pca.add_trace(go.Scatter(
             x=[usuario_pca[0]], y=[usuario_pca[1]],
             mode="markers+text",
@@ -536,12 +640,11 @@ elif st.session_state["etapa"] == "resultados":
         )
         st.plotly_chart(fig_pca, use_container_width=True)
 
-    # TAB 2: RADAR CHART (TELARAÑA)
+    # TAB 3: RADAR CHART (TELARAÑA)
     with tab_radar:
         st.markdown("##### Desglose radial de las 7 dimensiones conductuales")
         categories = [v.capitalize() for v in VARIABLES]
         values = [usuario[v] for v in VARIABLES]
-        # Cerrar el lazo
         categories.append(categories[0])
         values.append(values[0])
 
@@ -565,48 +668,6 @@ elif st.session_state["etapa"] == "resultados":
             showlegend=False
         )
         st.plotly_chart(fig_radar, use_container_width=True)
-
-    # TAB 3: DIAGNÓSTICO Y TEXTO APLICADO
-    with tab_detalle:
-        # Índices sintéticos
-        idx_exp = min(100.0, round(usuario["riesgo"]*0.35 + usuario["exploracion"]*0.40 + usuario["adaptabilidad"]*0.25, 1))
-        idx_est = min(100.0, round(usuario["planeacion"]*0.40 + usuario["precision"]*0.35 + usuario["cooperacion"]*0.25, 1))
-        idx_pre = min(100.0, round(usuario["impulsividad"]*0.45 + usuario["riesgo"]*0.30 + usuario["adaptabilidad"]*0.25, 1))
-
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Exploración", f"{idx_exp}/100")
-        c2.metric("Estabilidad", f"{idx_est}/100")
-        c3.metric("Bajo Presión", f"{idx_pre}/100")
-
-        st.divider()
-
-        narrativas = {
-            "Cauteloso Analítico": {
-                "significado": "En la ruta mostraste preferencia por la estabilidad y por tener claras las variables antes de comprometer recursos. Cuidas los márgenes de seguridad para no arriesgar de más la misión.",
-                "patrones": "Tus decisiones reflejan planeación, sobriedad en el gasto y prudencia ante imprevistos. Te tomas un momento para revisar opciones antes de actuar.",
-                "implicaciones": "En proyectos de equipo, este estilo es el ancla que evita descuidos costosos. En escenarios ultra dinámicos, conviene soltar un poco el libreto para no perder ritmo."
-            },
-            "Explorador Estratégico": {
-                "significado": "Tu estilo se orienta a descubrir y aprovechar oportunidades en el camino. Asumes la incertidumbre como parte natural del viaje si la experiencia lo amerita.",
-                "patrones": "Disposición constante a tomar rutas alternas, avanzar con información parcial y probar lo desconocido sin descuidar la viabilidad del trayecto.",
-                "implicaciones": "Aportas dinamismo y visión de avance. El punto de atención radica en no subestimar los tiempos y reservas para asegurar el regreso."
-            },
-            "Adaptativo Resiliente": {
-                "significado": "Mostraste un balance sano entre sensatez, flexibilidad y escucha activa. No te aferras a planes rígidos si las circunstancias sobre el terreno cambian.",
-                "patrones": "Habilidad para destrabar desacuerdos en el grupo, ajustar el itinerario con lo que hay a la mano y encontrar salidas prácticas.",
-                "implicaciones": "En contextos colaborativos, eres quien mantiene la armonía operativa y saca adelante las tareas frente a los tropiezos cotidianos."
-            },
-            "Impulsivo Bajo Presión": {
-                "significado": "Frente a la urgencia, tu reacción es resolver sobre la marcha y con determinación. Prefieres moverte antes que quedarte varado analizando de más.",
-                "patrones": "Tus respuestas priorizan velocidad, resolución en caliente y tolerancia alta a la falta de certezas cuando el tiempo apremia.",
-                "implicaciones": "Cualidad clave en momentos críticos. En proyectos de mediano plazo, una pausa breve para consultar con el equipo te evitará retrabajos."
-            }
-        }
-
-        diag = narrativas[perfil_nombre]
-        st.markdown(f"**En el terreno:** {diag['significado']}")
-        st.markdown(f"**Tendencia detectada:** {diag['patrones']}")
-        st.markdown(f"**Recomendación práctica:** {diag['implicaciones']}")
 
     st.write("")
     if st.button("Volver a iniciar la expedición", use_container_width=True):
