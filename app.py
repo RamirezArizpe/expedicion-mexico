@@ -332,7 +332,7 @@ if st.session_state["etapa"] == "intro":
             Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a cientos de perfiles simulados.
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
-            <strong>Está accedienco a un prototipo de evaluación, los resultados evaluados no representan un diagnóstico psicológico, forman parte de una simulación educativa.</strong> proyectará tu estilo de resolución frente a cientos de perfiles simulados.
+            <strong>Está accedienco a un prototipo de evaluación, los resultados evaluados no representan un diagnóstico psicológico, forman parte de una simulación educativa.</strong>
         </p>
     </div>
     """, unsafe_allow_html=True)
