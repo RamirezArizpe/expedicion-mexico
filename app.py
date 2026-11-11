@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 # CONFIGURACIÓN GENERAL
 # =====================================================
 st.set_page_config(
-    page_title="Expedición México",
+    page_title="Expedición México · Simulación Conductual",
     page_icon="🧭",
     layout="wide"
 )
@@ -45,7 +45,7 @@ h2 {
     color: #7A003C !important;
     font-weight: 700 !important;
     margin-top: 1.8rem !important;
-    font-size: 1.6rem !important;
+    font-size: 1.5rem !important;
 }
 
 h3 {
@@ -72,7 +72,7 @@ h3 {
     box-shadow: 0 4px 14px rgba(0,0,0,0.03);
 }
 
-/* Botones con estilo distintivo */
+/* Botones institucionales */
 .stButton button {
     background: #7A003C !important;
     color: white !important;
@@ -90,7 +90,7 @@ h3 {
     transform: translateY(-1px);
 }
 
-/* Opciones de Radio agrupadas en tarjetas */
+/* Opciones de Radio */
 .stRadio > div {
     background: #FFFFFF;
     padding: 1rem 1.2rem;
@@ -99,7 +99,7 @@ h3 {
     margin-bottom: 0.8rem;
 }
 
-/* Tarjetas de métricas */
+/* Métricas */
 [data-testid="stMetric"] {
     background: #FFFFFF;
     border-radius: 16px;
@@ -163,7 +163,7 @@ def inicializar_modelos():
 base, scaler, pca, kmeans = inicializar_modelos()
 
 # =====================================================
-# INTERPRETACIONES Y REGLAS CONDUCTUALES
+# REGLAS E INTERPRETACIONES CONDUCTUALES
 # =====================================================
 def nivel(valor):
     if valor >= 75:
@@ -255,63 +255,69 @@ if not st.session_state["iniciado"]:
         st.rerun()
 
 # =====================================================
-# FORMULARIO DE ESCENARIOS
+# FORMULARIO DE ESCENARIOS (NARRATIVA INMERSIVA)
 # =====================================================
 if st.session_state["iniciado"]:
     st.success(f"Bienvenido/a a la expedición, **{st.session_state.get('nombre', 'Participante')}**.")
 
     with st.form("formulario_expedicion"):
-        st.header("1. Iniciamos la aventura — Zona Centro")
+        
+        # Parada 1
+        st.header("1. El Punto de Partida — Altiplano Central")
         r1 = st.radio(
-            "Tu viaje inicia en la zona centro del país. ¿Cómo te gustaría avanzar?",
+            "La expedición parte al amanecer. Tienes en tus manos una carta de ruta validada y el rumor de un sendero poco transitado con vestigios arqueológicos intactos. ¿Cuál es tu primera decisión?",
             [
-                "Elegir una ruta segura que ya conoces",
-                "Elegir una ruta equilibrada que permita explorar sin demasiada exposición",
-                "Elegir una ruta poco conocida con alta recompensa cultural"
+                "Avanzar estrictamente por la carretera federal planificada; la prioridad es cumplir el itinerario sin contratiempos.",
+                "Tomar la ruta escénica secundaria: permite explorar el paisaje sin alejarse demasiado del camino principal.",
+                "Internarse de inmediato por la brecha comunitaria; los mayores descubrimientos están fuera del mapa oficial."
             ],
             index=0
         )
 
-        st.header("2. Siguiente parada — Oaxaca")
+        # Parada 2
+        st.header("2. Gestión en la Sierra — Valles Centrales de Oaxaca")
         r2 = st.radio(
-            "¿Qué harías con tus viáticos y reservas?",
+            "En la sierra oaxaqueña surge la opción de alquilar transporte de montaña y guías locales para llegar a una reserva remota antes de que llueva. El costo es alto frente a tus fondos. ¿Cómo administras tus recursos?",
             [
-                "Conservar recursos para reducir pérdidas",
-                "Invertir parcialmente y mantener reservas",
-                "Usar gran parte de recursos para acelerar el viaje"
+                "Conservar el fondo intacto y explorar únicamente las rutas a pie cubiertas por el presupuesto asignado.",
+                "Invertir parcialmente en una visita corta para mantener un fondo de reserva ante cualquier eventualidad.",
+                "Desembolsar lo necesario sin titubear; la oportunidad de cruzar la sierra antes de la tormenta justifica el gasto."
             ],
             index=0
         )
 
-        st.header("3. Vámonos a Yucatán")
+        # Parada 3
+        st.header("3. Ambigüedad en la Selva — Península de Yucatán")
         r3 = st.radio(
-            "Descubres información incompleta sobre una ruta histórica.",
+            "En la selva yucateca, el GPS pierde enlace satelital justo ante una bifurcación no documentada. Quedan 90 minutos de luz natural para ubicar el campamento. ¿Cómo respondes ante la falta de datos?",
             [
-                "Esperar más información antes de actuar",
-                "Avanzar y ajustar sobre la marcha",
-                "Actuar rápidamente para aprovechar la oportunidad"
+                "Esperar en el lugar, montar campamento base de resguardo y buscar señal con calma a primera hora del día.",
+                "Avanzar con brújula manual y marcas de terreno, ajustando el rumbo paso a paso sobre la marcha.",
+                "Actuar rápidamente y seguir el cauce del arroyo más cercano para avanzar antes del anochecer."
             ],
             index=0
         )
 
-        st.header("4. Prepárate para las turbulencias")
+        # Parada 4
+        st.header("4. Conflicto en el Campamento — Noche de Tormenta")
         r4 = st.radio(
-            "Tu equipo no está de acuerdo sobre el siguiente destino.",
+            "El clima empeora y el equipo se divide: una mitad exige refugiarse de inmediato y la otra insiste en mantener el ascenso hacia el observatorio. Debes destrabar la discusión. ¿Qué postura adoptas?",
             [
-                "Mantener el plan original",
-                "Negociar una solución intermedia",
-                "Cambiar completamente la estrategia"
+                "Mantener el plan original aprobado al inicio y pedir a toda la tripulación apegarse a la disciplina.",
+                "Negociar una solución intermedia: una pausa técnica breve para dialogar y fijar un punto medio de resguardo.",
+                "Cambiar completamente la estrategia y ordenar una retirada táctica hacia una ruta alterna no explorada."
             ],
             index=0
         )
 
-        st.header("5. Regreso a Ciudad de México")
+        # Parada 5
+        st.header("5. Carrera Contra el Tiempo — Retorno a la Terminal CDMX")
         r5 = st.radio(
-            "Llegas justo antes de que cierre el metro.",
+            "De regreso en la capital, llegas a la estación con las muestras y el equipo justo cuando anuncian el silbatazo del último convoy del metro. Hay aglomeración en los torniquetes. ¿Qué haces?",
             [
-                "Corres para alcanzar el último tren",
-                "Buscas rutas alternas antes de decidir",
-                "Pides transporte privado aunque no estuviera planeado"
+                "Corres a máxima velocidad para superar el tumulto y alcanzar a subirte antes del cierre de puertas.",
+                "Buscas rutas alternas en el mapa metropolitano para combinar trolebús o metrobús de forma más ordenada.",
+                "Pides transporte privado por aplicación móvil aunque no estuviera planeado, garantizando resguardar el material."
             ],
             index=0
         )
@@ -319,17 +325,17 @@ if st.session_state["iniciado"]:
         enviar = st.form_submit_button("Generar reporte conductual")
 
     # =====================================================
-    # MOTOR CONDUCTUAL (Cálculo del Perfil)
+    # MOTOR CONDUCTUAL (Mapeo de Variables)
     # =====================================================
     if enviar:
         usuario = {var: 50.0 for var in VARIABLES}
 
-        # R1
-        if "segura" in r1:
+        # R1: Altiplano Central
+        if "carretera federal" in r1:
             usuario["riesgo"] -= 20
             usuario["precision"] += 20
             usuario["planeacion"] += 20
-        elif "equilibrada" in r1:
+        elif "escénica secundaria" in r1:
             usuario["adaptabilidad"] += 15
             usuario["exploracion"] += 10
         else:
@@ -337,46 +343,46 @@ if st.session_state["iniciado"]:
             usuario["exploracion"] += 30
             usuario["impulsividad"] += 10
 
-        # R2
-        if "Conservar" in r2:
+        # R2: Oaxaca
+        if "Conservar el fondo" in r2:
             usuario["planeacion"] += 20
             usuario["precision"] += 15
-        elif "parcialmente" in r2:
+        elif "Invertir parcialmente" in r2:
             usuario["adaptabilidad"] += 15
         else:
             usuario["riesgo"] += 15
             usuario["impulsividad"] += 20
 
-        # R3
-        if "Esperar" in r3:
+        # R3: Yucatán
+        if "Esperar en el lugar" in r3:
             usuario["precision"] += 15
             usuario["impulsividad"] -= 10
-        elif "ajustar" in r3:
+        elif "Avanzar con brújula" in r3:
             usuario["adaptabilidad"] += 20
         else:
             usuario["riesgo"] += 20
             usuario["impulsividad"] += 25
 
-        # R4
-        if "Mantener" in r4:
+        # R4: Tormenta
+        if "Mantener el plan" in r4:
             usuario["cooperacion"] -= 15
-        elif "Negociar" in r4:
+        elif "Negociar una solución" in r4:
             usuario["cooperacion"] += 25
             usuario["adaptabilidad"] += 10
         else:
             usuario["riesgo"] += 10
 
-        # R5
-        if "Corres" in r5:
+        # R5: Terminal CDMX
+        if "Corres a máxima" in r5:
             usuario["impulsividad"] += 15
             usuario["riesgo"] += 10
-        elif "Buscas" in r5:
+        elif "Buscas rutas" in r5:
             usuario["planeacion"] += 15
             usuario["precision"] += 15
         else:
             usuario["adaptabilidad"] += 15
 
-        # Limitar puntuaciones a rango [0, 100]
+        # Normalización de rango [0, 100]
         for var in usuario:
             usuario[var] = float(max(0, min(100, usuario[var])))
 
@@ -424,7 +430,7 @@ if st.session_state.get("procesado"):
         </div>
         """, unsafe_allow_html=True)
 
-    # 2. Índices Sintéticos
+    # 2. Índices Sintéticos Integrados
     st.subheader("2. Índices conductuales integrados")
 
     indice_exploracion = min(100.0, round(
@@ -448,7 +454,7 @@ if st.session_state.get("procesado"):
         st.metric("Respuesta Bajo Presión", f"{indice_presion} / 100")
         st.progress(indice_presion / 100.0)
 
-    # 3. Visualización PCA
+    # 3. Mapa Dimensional PCA
     st.subheader("3. Tu posición en el mapa conductual (PCA 2D)")
 
     colores = {0: "#7A003C", 1: "#2563EB", 2: "#16A34A", 3: "#EA580C"}
@@ -461,7 +467,7 @@ if st.session_state.get("procesado"):
     fig.patch.set_facecolor("#F7F8FA")
     ax.set_facecolor("#FFFFFF")
 
-    # Muestra de la población
+    # Scatter de la base sintética
     for c in sorted(base["Cluster"].unique()):
         c_data = base[base["Cluster"] == c]
         ax.scatter(
@@ -470,7 +476,7 @@ if st.session_state.get("procesado"):
             label=nombres_clusters[c]
         )
 
-    # Centroides
+    # Centroides de cluster
     for c in sorted(base["Cluster"].unique()):
         cx = base[base["Cluster"] == c]["PCA1"].mean()
         cy = base[base["Cluster"] == c]["PCA2"].mean()
