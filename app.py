@@ -326,10 +326,11 @@ if st.session_state["etapa"] == "intro":
     <div class="station-card">
         <h3 style="margin-top:0;">Bienvenido a la expedición</h3>
         <p style="color: #475569; line-height: 1.6;">
-            A lo largo de cinco paradas clave en la geografía mexicana, enfrentarás dilemas típicos de ruta donde los recursos, el tiempo o el clima te obligarán a elegir.
+            A lo largo de cinco paradas clave en la geografía mexicana, enfrentarás dilemas típicos de ruta donde los recursos, el tiempo o el clima te orillarán a tomar decisiones.
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
             Detrás de cada respuesta, un modelo de <strong>Clustering Conductual (K-Means)</strong> y <strong>Reducción Dimensional (PCA)</strong> proyectará tu estilo de resolución frente a cientos de perfiles simulados.
+        </p>
         </p>
         <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
             <strong>Está accediendo a un prototipo de evaluación, los resultados no representan un diagnóstico psicológico y/o clínico, forman parte de una simulación educativa.</strong>
